@@ -12,7 +12,7 @@
             --texture-color: #f5deb3;  /* Wheat / Butterscotch hint */
             --nav-bg: #fdf5e6;
             --text-color: #4a3728;     /* Deep Cocoa for readability */
-            --accent-color: #fffaf0;   /* Floral White for cards */
+            --accent-color: #fffaf0;   /* Floral White for cards/frames */
             --highlight: #d2691e;      /* Chocolate/Orange for links */
             --border-color: #e3d5ca;
         }
@@ -22,7 +22,7 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
-            /* Creating a subtle grainy texture effect */
+            /* Subtle grainy texture */
             background-image: 
                 radial-gradient(circle at 50% 50%, rgba(245, 222, 179, 0.2) 0%, transparent 100%),
                 url("https://www.transparenttextures.com/patterns/sandpaper.png");
@@ -62,21 +62,39 @@
 
         main { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; min-height: 80vh; }
 
-        .content-section { display: none; animation: fadeIn 0.8s ease-out; }
+        .content-section { display: none; animation: fadeIn 0.9s ease-out; }
         .content-section.active-section { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1, h2 { text-align: center; margin-bottom: 2rem; color: var(--highlight); }
+        h1, h2 { text-align: center; margin-bottom: 1.5rem; color: var(--highlight); }
+        p.intro-text { text-align: center; max-width: 700px; margin: 0 auto 3rem auto; color: #7a6251; }
+
+        /* --- New Home Hero Image Styling --- */
+        .hero-frame {
+            background: var(--accent-color);
+            padding: 20px; /* Thicker "matting" for the main image */
+            border: 12px solid #fff; /* Grand white frame */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15); /* Deep, soft shadow */
+            margin-bottom: 3rem;
+            border-radius: 4px;
+        }
+
+        .hero-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 2px;
+        }
 
         /* --- Gallery Styling --- */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 30px;
             padding: 20px 0;
         }
 
@@ -85,36 +103,40 @@
             padding: 15px;
             border: 8px solid #fff;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.4s ease;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
             text-align: center;
         }
 
-        .museum-frame:hover { transform: scale(1.03) rotate(1deg); }
+        .museum-frame:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
 
         .museum-frame img {
             width: 100%;
             height: 250px;
             object-fit: cover;
-            filter: sepia(20%); /* Adds a slight warm, vintage touch */
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            filter: sepia(15%); /* Warm vintage touch */
         }
+        .museum-frame p { font-style: italic; color: var(--highlight); }
 
-        /* Card Layout for Facts/Reflections */
+        /* Card Layout */
         .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         .card { 
             background: var(--accent-color); 
-            padding: 2rem; 
-            border-radius: 4px; 
-            border-left: 4px solid var(--highlight);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            padding: 2.5rem; 
+            border-radius: 8px; 
+            border-left: 5px solid var(--highlight);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
+        .card h3 { margin-bottom: 1rem; color: var(--text-color); }
 
-        footer { text-align: center; padding: 3rem; color: #a08d7d; font-size: 0.9rem; }
+        footer { text-align: center; padding: 3rem; color: #a08d7d; font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid var(--border-color); }
 
         @media (max-width: 768px) {
             .card-grid { grid-template-columns: 1fr; }
-            header { flex-direction: column; }
-            nav ul { margin-top: 1rem; }
+            header { flex-direction: column; padding: 1rem; }
+            nav ul { margin-top: 1.5rem; }
+            nav ul li { margin: 0 10px; }
+            .hero-frame { border-width: 6px; padding: 10px; }
         }
     </style>
 </head>
@@ -124,10 +146,9 @@
         <div class="logo">MUSEUM OF VALUES</div>
         <nav>
             <ul>
-                <li><a class="nav-link active-link" data-target="home">Entry</a></li>
-                <li><a class="nav-link" data-target="gallery">Gallery</a></li>
+                <li><a class="nav-link active-link" data-target="home">Entry Hall</a></li>
+                <li><a class="nav-link" data-target="gallery">Collection</a></li>
                 <li><a class="nav-link" data-target="reflections">Reflections</a></li>
-                <li><a class="nav-link" data-target="quotes">Wisdom</a></li>
             </ul>
         </nav>
     </header>
@@ -135,23 +156,28 @@
     <main>
         <section id="home" class="content-section active-section">
             <h1>Welcome to the Exhibit</h1>
-            <p style="text-align: center;">A quiet space dedicated to nature, value themes, and philosophical inquiry.</p>
+            <p class="intro-text">A quiet digital space dedicated to noticing the details in nature and exploring philosophical themes.</p>
+            
+            <div class="hero-frame">
+                <img src="https://via.placeholder.com/1200x500/d2691e/ffffff?text=Replace+With+Your+Panorama+Image" alt="Panoramic view of nature textures in a virtual gallery">
+            </div>
+
         </section>
 
         <section id="gallery" class="content-section">
             <h2>The Botanical Wing</h2>
             <div class="gallery-grid">
                 <div class="museum-frame">
-                    <img src="https://via.placeholder.com/400x300?text=The+Gardenia+Leaf" alt="Gardenia Leaf">
-                    <p><i>The Unique Notch</i></p>
+                    <img src="https://via.placeholder.com/400x300/e3d5ca/4a3728?text=Gardenia+Leaf" alt="Gardenia Leaf">
+                    <p>The Unique Notch</p>
                 </div>
                 <div class="museum-frame">
-                    <img src="https://via.placeholder.com/400x300?text=Banyan+Study" alt="Banyan Leaf">
-                    <p><i>Banyan Textures</i></p>
+                    <img src="https://via.placeholder.com/400x300/e3d5ca/4a3728?text=Stone+Textures" alt="Stones">
+                    <p>Foundations</p>
                 </div>
-                <div class="museum-frame">
-                    <img src="https://via.placeholder.com/400x300?text=Cinema+View" alt="Cinema Screen View">
-                    <p><i>The Panoramic Perspective</i></p>
+                 <div class="museum-frame">
+                    <img src="https://via.placeholder.com/400x300/e3d5ca/4a3728?text=New+Growth" alt="Sapling">
+                    <p>Emergence</p>
                 </div>
             </div>
         </section>
@@ -160,24 +186,20 @@
             <h2>Internal Dialogues</h2>
             <div class="card-grid">
                 <div class="card">
-                    <h3>On Uniqueness</h3>
-                    <p>Is a leaf unique because of its species, or because of the tiny, imperfect notch earned through its own growth?</p>
+                    <h3>On Imperfection</h3>
+                    <p>Is a leaf defined by its perfect symmetry to the species standard, or by the unique notch it earned during its individual growth?</p>
                 </div>
                 <div class="card">
-                    <h3>Stillness</h3>
-                    <p>True success is not a destination, but the perception of peace found within a quiet room.</p>
+                    <h3>Perspective</h3>
+                    <p>The way we frame the world determines what we value. A simple bark texture, when given attention, becomes art.</p>
                 </div>
             </div>
         </section>
 
-        <section id="quotes" class="content-section">
-            <h2 style="font-style: italic;">"Success is a perception, not a destiny."</h2>
-            <p style="text-align: center;">— Guided by Value</p>
-        </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 | A Virtual Museum for the Curious Mind</p>
+        <p>2026 | Curated for the Curious Mind</p>
     </footer>
 
     <script>
@@ -196,7 +218,8 @@
 
                     const targetSection = document.getElementById(targetId);
                     if(targetSection) {
-                         setTimeout(() => { targetSection.classList.add('active-section'); }, 10);
+                        // A slightly longer delay makes the fade-in feel more majestic
+                         setTimeout(() => { targetSection.classList.add('active-section'); }, 50);
                     }
                 });
             });
