@@ -6,15 +6,14 @@
     <title>The Virtual Museum</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* --- DESIGN FOUNDATION (THE PALETTE) --- */
         :root {
-            /* Warm Butterscotch Cream Palette */
-            --bg-color: #fdf5e6;       /* Old Lace / Cream */
-            --texture-color: #f5deb3;  /* Wheat / Butterscotch hint */
+            --bg-color: #fdf5e6;       /* Warm Butterscotch Cream */
             --nav-bg: #fdf5e6;
             --text-color: #4a3728;     /* Deep Cocoa for readability */
-            --accent-color: #fffaf0;   /* Floral White for cards/frames */
-            --highlight: #d2691e;      /* Chocolate/Orange for links */
-            --border-color: #e3d5ca;
+            --accent-color: #fffaf0;   /* Floral White for frames/cards */
+            --highlight: #d2691e;      /* Chocolate Orange for accents */
+            --border-color: #e3d5ca;   /* Soft sand border */
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -22,121 +21,138 @@
         body {
             font-family: 'Poppins', sans-serif;
             background-color: var(--bg-color);
-            /* Subtle grainy texture */
+            /* Natural Grainy Texture */
             background-image: 
                 radial-gradient(circle at 50% 50%, rgba(245, 222, 179, 0.2) 0%, transparent 100%),
                 url("https://www.transparenttextures.com/patterns/sandpaper.png");
             color: var(--text-color);
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
+        /* --- NAVIGATION HEADER --- */
         header {
             background-color: var(--nav-bg);
             padding: 1.5rem 2rem;
             position: sticky;
             top: 0;
-            z-index: 100;
+            z-index: 1000;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo { font-weight: 600; font-size: 1.5rem; color: var(--highlight); letter-spacing: 1px; }
+        .logo { font-weight: 600; font-size: 1.4rem; color: var(--highlight); letter-spacing: 2px; }
 
         nav ul { list-style: none; display: flex; }
         nav ul li { margin-left: 2rem; }
         nav ul li a {
             text-decoration: none;
             color: var(--text-color);
-            font-weight: 400;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
             transition: all 0.3s ease;
             cursor: pointer;
-            padding-bottom: 5px;
         }
 
-        nav ul li a:hover, nav ul li a.active-link {
-            color: var(--highlight);
-            border-bottom: 2px solid var(--highlight);
-        }
+        nav ul li a:hover, nav ul li a.active-link { color: var(--highlight); }
 
+        /* --- MAIN MUSEUM ROOMS --- */
         main { padding: 4rem 2rem; max-width: 1100px; margin: 0 auto; min-height: 80vh; }
 
-        .content-section { display: none; animation: fadeIn 0.9s ease-out; }
+        .content-section { display: none; animation: fadeIn 0.8s ease-out; }
         .content-section.active-section { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        h1, h2 { text-align: center; margin-bottom: 1.5rem; color: var(--highlight); }
-        p.intro-text { text-align: center; max-width: 700px; margin: 0 auto 3rem auto; color: #7a6251; }
+        h2 { text-align: center; margin-bottom: 3rem; font-weight: 300; letter-spacing: 3px; color: var(--highlight); }
 
-        /* --- New Home Hero Image Styling --- */
+        /* --- ROOM: ENTRY (HOME) --- */
+        .welcome-msg { text-align: center; max-width: 650px; margin: 0 auto 3rem auto; font-style: italic; color: #7a6251; }
+        
         .hero-frame {
-            background: var(--accent-color);
-            padding: 20px; /* Thicker "matting" for the main image */
-            border: 12px solid #fff; /* Grand white frame */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15); /* Deep, soft shadow */
+            padding: 20px;
+            border: 15px solid #fff;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+            background: #fff;
             margin-bottom: 3rem;
-            border-radius: 4px;
         }
+        .hero-frame img { width: 100%; display: block; }
 
-        .hero-frame img {
-            width: 100%;
-            height: auto;
-            display: block;
-            border-radius: 2px;
+        /* Hover Pop-up Section */
+        .info-tab-container { position: relative; display: flex; justify-content: center; }
+        .info-tab {
+            padding: 10px 25px;
+            border: 1px solid var(--highlight);
+            color: var(--highlight);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.4s;
         }
+        .info-popup {
+            position: absolute;
+            bottom: 140%;
+            width: 350px;
+            background: #fff;
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.4s;
+            z-index: 10;
+        }
+        .info-tab-container:hover .info-popup { opacity: 1; visibility: visible; transform: translateY(0); }
+        .info-tab-container:hover .info-tab { background: var(--highlight); color: #fff; }
 
-        /* --- Gallery Styling --- */
-        .gallery-grid {
+        /* --- ROOM: COLLECTIONS (Visual Wing) --- */
+        .collections-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 30px;
-            padding: 20px 0;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 25px;
         }
+        .pure-frame { background: #fff; padding: 10px; border: 1px solid var(--border-color); }
+        .pure-frame img { width: 100%; height: auto; display: block; }
 
-        .museum-frame {
-            background: var(--accent-color);
-            padding: 15px;
-            border: 8px solid #fff;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        /* --- ROOM: REFLECTIONS (Dialogue Wing) --- */
+        .reflection-entry {
+            display: flex;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            align-items: center;
+        }
+        .reflection-entry:nth-child(even) { flex-direction: row-reverse; }
+        .reflection-img { flex: 1.2; }
+        .reflection-img img { width: 100%; border: 12px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .reflection-text { flex: 1; }
+        .reflection-text h3 { margin-bottom: 1.2rem; color: var(--highlight); font-weight: 400; }
+
+        /* --- ROOM: WISDOM (The Archive) --- */
+        .wisdom-item {
+            padding: 3rem 0;
+            border-bottom: 1px solid var(--border-color);
             text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
         }
+        .wisdom-date { font-size: 0.75rem; color: var(--highlight); letter-spacing: 2px; margin-bottom: 1rem; }
 
-        .museum-frame:hover { transform: translateY(-10px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
+        footer { text-align: center; padding: 4rem; color: #a08d7d; font-size: 0.8rem; border-top: 1px solid var(--border-color); margin-top: 5rem; }
 
-        .museum-frame img {
-            width: 100%;
-            height: 250px;
-            object-fit: cover;
-            margin-bottom: 15px;
-            filter: sepia(15%); /* Warm vintage touch */
-        }
-        .museum-frame p { font-style: italic; color: var(--highlight); }
-
-        /* Card Layout */
-        .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-        .card { 
-            background: var(--accent-color); 
-            padding: 2.5rem; 
-            border-radius: 8px; 
-            border-left: 5px solid var(--highlight);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        .card h3 { margin-bottom: 1rem; color: var(--text-color); }
-
-        footer { text-align: center; padding: 3rem; color: #a08d7d; font-size: 0.9rem; margin-top: 4rem; border-top: 1px solid var(--border-color); }
-
+        /* Mobile Adjustments */
         @media (max-width: 768px) {
-            .card-grid { grid-template-columns: 1fr; }
+            .reflection-entry { flex-direction: column !important; gap: 2rem; }
             header { flex-direction: column; padding: 1rem; }
             nav ul { margin-top: 1.5rem; }
             nav ul li { margin: 0 10px; }
-            .hero-frame { border-width: 6px; padding: 10px; }
+            .info-popup { width: 280px; left: 50%; transform: translateX(-50%); }
         }
     </style>
 </head>
@@ -146,64 +162,86 @@
         <div class="logo">MUSEUM OF VALUES</div>
         <nav>
             <ul>
-                <li><a class="nav-link active-link" data-target="home">Entry Hall</a></li>
-                <li><a class="nav-link" data-target="gallery">Collection</a></li>
+                <li><a class="nav-link active-link" data-target="home">Entry</a></li>
+                <li><a class="nav-link" data-target="collections">Collections</a></li>
                 <li><a class="nav-link" data-target="reflections">Reflections</a></li>
+                <li><a class="nav-link" data-target="wisdom">Wisdom</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section id="home" class="content-section active-section">
-            <h1>Welcome to the Exhibit</h1>
-            <p class="intro-text">A quiet digital space dedicated to noticing the details in nature and exploring philosophical themes.</p>
+            <h2>The Silent Exhibit</h2>
+            <p class="welcome-msg">A virtual museum for the architectural marvels of nature.</p>
             
             <div class="hero-frame">
-                <img src="https://github.com/gskg02-values/my-corner-of-the-web/blob/main/Home%20screen.png?raw=true" alt="Panoramic view of nature textures in a virtual gallery">
+                <img src="https://via.placeholder.com/1200x500/eee/4a3728?text=Main+Exhibit+Panorama" alt="Grand Panorama">
             </div>
 
+            <div class="info-tab-container">
+                <div class="info-tab">WHY THIS MUSEUM</div>
+                <div class="info-popup">
+                    <h3>The Architecture of the seen but not deeply seen</h3>
+                    <p>This space extracts the supreme, irreplaceable architectural marvels from nature. We believe success is a perception of balance, not just a destination.</p>
+                </div>
+            </div>
         </section>
 
-        <section id="gallery" class="content-section">
-            <h2>The Botanical Wing</h2>
-            <div class="gallery-grid">
-                <div class="museum-frame">
-                    <img src="https://via.placeholder.com/400x300/e3d5ca/4a3728?text=Gardenia+Leaf" alt="Gardenia Leaf">
-                    <p>The Unique Notch</p>
+        <section id="collections" class="content-section">
+            <h2>The Visual Wing</h2>
+            <div class="collections-grid" id="collections-grid">
                 </div>
-                <div class="museum-frame">
-                    <img src="https://via.placeholder.com/400x300/e3d5ca/4a3728?text=Stone+Textures" alt="Stones">
-                    <p>Foundations</p>
-                </div>
-                 <div class="museum-frame">
-                    <img src="https://via.placeholder.com/400x300/e3d5ca/4a3728?text=New+Growth" alt="Sapling">
-                    <p>Emergence</p>
-                </div>
-            </div>
         </section>
 
         <section id="reflections" class="content-section">
-            <h2>Internal Dialogues</h2>
-            <div class="card-grid">
-                <div class="card">
-                    <h3>On Imperfection</h3>
-                    <p>Is a leaf defined by its perfect symmetry to the species standard, or by the unique notch it earned during its individual growth?</p>
+            <h2>Notes on Nature</h2>
+            <div id="reflections-list">
                 </div>
-                <div class="card">
-                    <h3>Perspective</h3>
-                    <p>The way we frame the world determines what we value. A simple bark texture, when given attention, becomes art.</p>
-                </div>
-            </div>
         </section>
 
+        <section id="wisdom" class="content-section">
+            <h2>The Hall of Wisdom</h2>
+            <div class="wisdom-item">
+                <div class="wisdom-date">FEB 15, 2026</div>
+                <blockquote>"Success is a perception, not a destiny."</blockquote>
+            </div>
+        </section>
     </main>
 
     <footer>
-        <p>2026 | Curated for the Curious Mind</p>
+        <p>Curated with Care | 2026</p>
     </footer>
 
     <script>
+        // --- LAYOUT GENERATOR ---
         document.addEventListener('DOMContentLoaded', () => {
+            const collectionsGrid = document.getElementById('collections-grid');
+            const reflectionsList = document.getElementById('reflections-list');
+
+            // Generate 12 Visual Slots
+            for (let i = 1; i <= 12; i++) {
+                collectionsGrid.innerHTML += `
+                    <div class="pure-frame">
+                        <img src="https://via.placeholder.com/400x500/fff/4a3728?text=Exhibit+${i}" alt="Exhibit ${i}">
+                    </div>`;
+            }
+
+            // Generate 12 Reflection Slots
+            for (let i = 1; i <= 12; i++) {
+                reflectionsList.innerHTML += `
+                    <div class="reflection-entry">
+                        <div class="reflection-img">
+                            <img src="https://via.placeholder.com/600x400/fff/4a3728?text=Reflection+Image+${i}" alt="Reflection ${i}">
+                        </div>
+                        <div class="reflection-text">
+                            <h3>Study ${i}</h3>
+                            <p>Once the layout is finalized, your specific reflections and quotes will go here.</p>
+                        </div>
+                    </div>`;
+            }
+
+            // --- NAVIGATION LOGIC ---
             const navLinks = document.querySelectorAll('.nav-link');
             const sections = document.querySelectorAll('.content-section');
 
@@ -218,9 +256,9 @@
 
                     const targetSection = document.getElementById(targetId);
                     if(targetSection) {
-                        // A slightly longer delay makes the fade-in feel more majestic
-                         setTimeout(() => { targetSection.classList.add('active-section'); }, 50);
+                        setTimeout(() => { targetSection.classList.add('active-section'); }, 50);
                     }
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 });
             });
         });
